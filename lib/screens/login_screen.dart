@@ -17,6 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _obscure = true;
 
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: [
                           AuthTextField(
+                            onSaved: (value) {
+                              setState(() {
+                                email = value;
+                              });
+                            },
                             keyboardType: TextInputType.emailAddress,
                             controller: _emailController,
                             hint: 'Enter your email',
@@ -75,6 +82,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           AuthTextField(
                             keyboardType: TextInputType.visiblePassword,
                             controller: _passwordController,
+                             onSaved: (value) {
+                              setState(() {
+                                password = value;
+                              });
+                            },
                             hint: 'Enter your password',
                             obscure: _obscure,
                             validator: (value) {

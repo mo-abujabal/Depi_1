@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:test101/router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -74,6 +75,25 @@ class HomeScreen extends StatelessWidget {
             _ContactTile(
               contactInfo: 'portfolio-mo-abujabal.web.app',
               iconData: Icons.link_outlined,
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: 200,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () =>
+                    context.pushNamed(AppRouter.kBasketballCounter),
+                child: const Text(
+                  'Basketball Counter',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
           ],
         ),

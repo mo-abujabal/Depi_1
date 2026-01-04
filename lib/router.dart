@@ -3,11 +3,13 @@ import 'Screens/welcome_screen.dart';
 import 'Screens/login_screen.dart';
 import 'Screens/register_screen.dart';
 import 'Screens/home_screen.dart';
+import 'Screens/basketball_counter_screen.dart';
 
 abstract class AppRouter {
   static const String kLoginScreen = 'login';
   static const String kRegisterScreen = 'register';
   static const String kHomeScreen = 'home';
+  static const String kBasketballCounter = 'basketball';
 
   static final GoRouter router = GoRouter(
     routes: <RouteBase>[
@@ -29,6 +31,11 @@ abstract class AppRouter {
             path: kHomeScreen,
             name: kHomeScreen,
             builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: kBasketballCounter,
+            name: kBasketballCounter,
+            builder: (context, state) => const BasketballCounterScreen(),
           ),
         ],
       ),
