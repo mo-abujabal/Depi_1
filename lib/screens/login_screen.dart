@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:test101/router.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/social_button.dart';
 
@@ -12,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _obscure = true;
 
   @override
@@ -36,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         side: const BorderSide(color: Colors.grey),
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       icon: const Icon(Icons.arrow_back),
                     ),
                     const SizedBox(height: 8),
@@ -48,22 +51,52 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    AuthTextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _emailController,
-                      hint: 'Enter your email',
-                    ),
-                    const SizedBox(height: 12),
-                    AuthTextField(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: _passwordController,
-                      hint: 'Enter your password',
-                      obscure: _obscure,
-                      suffix: IconButton(
-                        icon: Icon(
-                          _obscure ? Icons.visibility_off : Icons.visibility,
-                        ),
-                        onPressed: () => setState(() => _obscure = !_obscure),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          AuthTextField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailController,
+                            hint: 'Enter your email',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              if (!RegExp(
+                                r'^[^@]+@[^@]+\.[^@]+',
+                              ).hasMatch(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 12),
+                          AuthTextField(
+                            keyboardType: TextInputType.visiblePassword,
+                            controller: _passwordController,
+                            hint: 'Enter your password',
+                            obscure: _obscure,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
+                            },
+                            suffix: IconButton(
+                              icon: Icon(
+                                _obscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                              onPressed: () =>
+                                  setState(() => _obscure = !_obscure),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Align(
@@ -90,7 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.pushNamed(AppRouter.kHomeScreen);
+                          }
+                        },
                         child: const Text(
                           'Login',
                           style: TextStyle(fontSize: 16, color: Colors.white),
@@ -148,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/register'),
+                      onTap: () => context.pushReplacementNamed(
+                        AppRouter.kRegisterScreen,
+                      ),
                       child: const Text(
                         'Register Now',
                         style: TextStyle(

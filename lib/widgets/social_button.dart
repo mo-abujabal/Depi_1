@@ -22,7 +22,10 @@ class SocialButton extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 4),
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.4),
+              blurRadius: 4,
+            ),
           ],
         ),
         child: Center(child: Icon(icon, color: color, size: 40)),

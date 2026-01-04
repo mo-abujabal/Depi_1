@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:test101/router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -36,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () => Navigator.pushNamed(context, '/login'),
+                    onPressed: () => context.pushNamed(AppRouter.kLoginScreen),
                     child: const Text(
                       'Login',
                       style: TextStyle(fontSize: 16, color: Colors.white),
@@ -55,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () => Navigator.pushNamed(context, '/register'),
+                    onPressed: () => context.pushNamed(AppRouter.kRegisterScreen),
                     child: const Text(
                       'Register',
                       style: TextStyle(color: Colors.black87),
@@ -64,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/home'),
+                  onPressed: () => context.pushNamed(AppRouter.kHomeScreen),
                   child: const Text(
                     'Continue as a guest',
                     style: TextStyle(
